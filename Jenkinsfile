@@ -6,38 +6,50 @@ pipeline {
     stages {
         stage('build-docker-image') {
             steps {
-                echo "Building docker image..."
+                build()
             } 
         }
         stage('deploy-dev') {
             steps {
-                echo "Deployment triggered on DEV env..."
+                deploy("DEV")
             }
         }
         stage('test-dev') {
             steps {
-                echo "API tests triggered on DEV env..."
+                runApiTests("DEV")
             }
         }
         stage('deploy-stg') {
             steps {
-                echo "Deployment triggered on STG env..."
+                deploy("STG")
             }
         }
         stage('test-stg') {
             steps {
-                echo "API tests triggered on STG env..."
+                runApiTests("STG")
             }
         }
         stage('deploy-prd') {
             steps {
-                echo "Deployment triggered on PRD env..."
+                deploy("PRD")
             }
         }
         stage('test-prd') {
             steps {
-                echo "API tests triggered on PRD env..."
+                runApiTests("PRD")
             }
         }
     }
+}
+
+def build(){
+    echo "Building docker image..."
+}
+
+def deploy(String environment){
+    echo "Deployment triggered on ${environment} env..."
+}
+
+def runApiTests(String environment){
+    echo "API tests triggered on ${environment} env..."
 }
